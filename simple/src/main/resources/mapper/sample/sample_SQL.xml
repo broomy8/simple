@@ -4,42 +4,79 @@
 <mapper namespace="sample">
 	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
         <![CDATA[
-            SELECT NUM, SUBJECT, WRITER, HIT, REG_DATE
-            FROM JBOARD
-            ORDER BY NUM DESC
+            SELECT 
+            	NUM, SUBJECT, WRITER, HIT, REG_DATE
+            FROM 
+            	JBOARD
+            ORDER BY 
+            	NUM DESC
         ]]>
 	</select>
 	
 	<insert id="insertBoard" parameterType="hashmap">
 		<![CDATA[
-			INSERT INTO JBOARD
-			(
-				SUBJECT, CONTENT, WRITER, REG_DATE
-			)
-			VALUES
-			(
-				#{SUBJECT},
-				#{CONTENT},
-				#{WRITER},
-				NOW()
-			)
+			INSERT INTO 
+				JBOARD
+				(
+					SUBJECT, CONTENT, WRITER, REG_DATE
+				)
+				VALUES
+				(
+					#{SUBJECT},
+					#{CONTENT},
+					#{WRITER},
+					NOW()
+				)
 		]]>
 	</insert>
 	
 	<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
-			SELECT NUM, SUBJECT, WRITER, HIT, CONTENT, REG_DATE
-			FROM JBOARD
-			WHERE NUM = #{NUM}
+			SELECT 
+				NUM, 
+				SUBJECT, 
+				WRITER, 
+				HIT, 
+				CONTENT, 
+				REG_DATE
+			FROM 
+				JBOARD
+			WHERE 
+				NUM = #{NUM}
 		]]>
 	</select>
 	
 	<update id="updateHitCnt" parameterType="hashmap">
 		<![CDATA[
-			UPDATE JBOARD
-			SET HIT = HIT + 1
-			WHERE NUM = #{NUM}
+			UPDATE 
+				JBOARD
+			SET 
+				HIT = HIT + 1
+			WHERE 
+				NUM = #{NUM}
 		]]>
 	</update>
+	
+	<update id="updateBoard" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				JBOARD
+			SET 
+				SUBJECT = #{SUBJECT},
+				CONTENT = #{CONTENT},
+				REG_DATE = #{REG_DATE} 
+			WHERE 
+				NUM = #{NUM}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM
+				JBOARD
+			WHERE 
+				NUM = #{NUM}
+		]]>
+	</delete>
 	
 </mapper>

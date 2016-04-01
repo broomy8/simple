@@ -34,7 +34,7 @@ public class SampleController
 		return mv;
 	}
 
-	@RequestMapping(value = "/sample/testMapArgumentResolver.do")
+	@RequestMapping(value = "/testMapArgumentResolver.do")
 	public ModelAndView testMapArgumentResolver(CommandMap commandMap) throws Exception
 	{
 		ModelAndView mv = new ModelAndView("");
@@ -80,6 +80,38 @@ public class SampleController
 		ModelAndView mv = new ModelAndView("redirect:/openBoardList.do");
 
 		sampleService.insertBoard(commandMap.getMap());
+
+		return mv;
+	}
+	
+	@RequestMapping(value = "/openBoardUpdate.do")
+	public ModelAndView openBoardUpdate(CommandMap commandMap) throws Exception
+	{
+		ModelAndView mv = new ModelAndView("/sample/updateBoard");
+
+		Map<String, Object> map = sampleService.selectBoardDetail(commandMap.getMap());
+		mv.addObject("map", map);
+
+		return mv;
+	}
+	
+	@RequestMapping(value = "/updateBoard.do")
+	public ModelAndView updateBoard(CommandMap commandMap) throws Exception
+	{
+		ModelAndView mv = new ModelAndView("redirect:/openBoardDetail.do");
+
+		sampleService.updateBoard(commandMap.getMap());
+		mv.addObject("NUM", commandMap.get("NUM"));
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/deleteBoard.do")
+	public ModelAndView deleteBoard(CommandMap commandMap) throws Exception
+	{
+		ModelAndView mv = new ModelAndView("redirect:/openBoardList.do");
+
+		sampleService.deleteBoard(commandMap.getMap());
 
 		return mv;
 	}

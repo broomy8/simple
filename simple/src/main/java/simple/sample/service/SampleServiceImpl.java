@@ -36,4 +36,17 @@ public class SampleServiceImpl implements SampleService
 	{
 		sampleDAO.insertBoard(map);
 	}
+	
+	@Override
+	public void updateBoard(Map<String, Object> map) throws Exception
+	{
+		sampleDAO.updateBoard(map);
+	}
+	
+	@Override
+	public void deleteBoard(Map<String, Object> map) throws Exception
+	{
+		sampleDAO.deleteBoard(map);
+	}
+	
 }
