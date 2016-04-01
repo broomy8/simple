@@ -10,4 +10,36 @@
         ]]>
 	</select>
 	
+	<insert id="insertBoard" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO JBOARD
+			(
+				SUBJECT, CONTENT, WRITER, REG_DATE
+			)
+			VALUES
+			(
+				#{SUBJECT},
+				#{CONTENT},
+				#{WRITER},
+				NOW()
+			)
+		]]>
+	</insert>
+	
+	<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT NUM, SUBJECT, WRITER, HIT, CONTENT, REG_DATE
+			FROM JBOARD
+			WHERE NUM = #{NUM}
+		]]>
+	</select>
+	
+	<update id="updateHitCnt" parameterType="hashmap">
+		<![CDATA[
+			UPDATE JBOARD
+			SET HIT = HIT + 1
+			WHERE NUM = #{NUM}
+		]]>
+	</update>
+	
 </mapper>

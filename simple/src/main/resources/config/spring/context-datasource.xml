@@ -8,5 +8,6 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/ywpark" />
 		<property name="username" value="ywpark" />
 		<property name="password" value="oneshot011" />
+		<property name="connectionProperties" value="characterEncoding=utf8;" />
 	</bean>
 </beans>
