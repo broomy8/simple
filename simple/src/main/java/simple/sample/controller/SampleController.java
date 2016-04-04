@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -69,17 +70,18 @@ public class SampleController
 		ModelAndView mv = new ModelAndView("/sample/boardDetail");
 
 		Map<String, Object> map = sampleService.selectBoardDetail(commandMap.getMap());
-		mv.addObject("map", map);
+		mv.addObject("map", map.get("map"));
+		mv.addObject("list", map.get("list"));
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/insertBoard.do")
-	public ModelAndView insertBoard(CommandMap commandMap) throws Exception
+	public ModelAndView insertBoard(CommandMap commandMap, HttpServletRequest request) throws Exception
 	{
 		ModelAndView mv = new ModelAndView("redirect:/openBoardList.do");
 
-		sampleService.insertBoard(commandMap.getMap());
+		sampleService.insertBoard(commandMap.getMap(), request);
 
 		return mv;
 	}
@@ -90,17 +92,18 @@ public class SampleController
 		ModelAndView mv = new ModelAndView("/sample/updateBoard");
 
 		Map<String, Object> map = sampleService.selectBoardDetail(commandMap.getMap());
-		mv.addObject("map", map);
+		mv.addObject("map", map.get("map"));
+		mv.addObject("list", map.get("list"));
 
 		return mv;
 	}
 	
 	@RequestMapping(value = "/updateBoard.do")
-	public ModelAndView updateBoard(CommandMap commandMap) throws Exception
+	public ModelAndView updateBoard(CommandMap commandMap, HttpServletRequest request) throws Exception
 	{
 		ModelAndView mv = new ModelAndView("redirect:/openBoardDetail.do");
 
-		sampleService.updateBoard(commandMap.getMap());
+		sampleService.updateBoard(commandMap.getMap(), request);
 		mv.addObject("NUM", commandMap.get("NUM"));
 		
 		return mv;

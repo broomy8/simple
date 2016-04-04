@@ -10,24 +10,30 @@ import simple.common.dao.AbstractDAO;
 @Repository("sampleDAO")
 public class SampleDAO extends AbstractDAO
 {
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selecBoardList(Map<String, Object> map) throws Exception
+	public List<Map<String, Object>> selectBoardList(Map<String, Object> map) throws Exception
 	{
-		return (List<Map<String, Object>>)selectList("sample.selectBoardList", map);
+		return (List<Map<String, Object>>) selectList("sample.selectBoardList", map);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> selecBoardDetail(Map<String, Object> map) throws Exception
+	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception
 	{
 		return (Map<String, Object>) selectOne("sample.selectBoardDetail", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception
+	{
+		return (List<Map<String, Object>>) selectList("sample.selectFileList", map);
 	}
 
 	public void insertBoard(Map<String, Object> map) throws Exception
 	{
 		insert("sample.insertBoard", map);
 	}
-	
+
 	public void updateBoard(Map<String, Object> map) throws Exception
 	{
 		update("sample.updateBoard", map);
@@ -42,4 +48,20 @@ public class SampleDAO extends AbstractDAO
 	{
 		delete("sample.deleteBoard", map);
 	}
+
+	public void insertFile(Map<String, Object> map) throws Exception
+	{
+		insert("sample.insertFile", map);
+	}
+
+	public void deleteFileList(Map<String, Object> map) throws Exception
+	{
+		update("sample.deleteFileList", map);
+	}
+
+	public void updateFile(Map<String, Object> map) throws Exception
+	{
+		update("sample.updateFile", map);
+	}
+
 }

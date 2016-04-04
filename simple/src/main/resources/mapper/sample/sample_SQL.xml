@@ -12,8 +12,20 @@
             	NUM DESC
         ]]>
 	</select>
-	
-	<insert id="insertBoard" parameterType="hashmap">
+
+	<select id="selectFileList" parameterType="hashmap" resultType="hashMap">
+		<![CDATA[
+			SELECT
+				NUM, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE / 1024 , 1) AS FILE_SIZE
+			FROM
+				TB_FILE
+			WHERE
+				BOARD_NUM = #{NUM}
+				AND DEL_GB = 'N'
+		]]>
+	</select>
+
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="NUM">
 		<![CDATA[
 			INSERT INTO 
 				JBOARD
@@ -22,14 +34,25 @@
 				)
 				VALUES
 				(
-					#{SUBJECT},
-					#{CONTENT},
-					#{WRITER},
-					NOW()
+					#{SUBJECT}, #{CONTENT}, #{WRITER}, NOW()
 				)
 		]]>
 	</insert>
-	
+
+	<insert id="insertFile" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO 
+				TB_FILE
+				(
+					BOARD_NUM, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, REG_DATE, WRITER
+				)
+				VALUES
+				(
+					#{BOARD_NUM}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, NOW(), '박영우'
+				)
+		]]>
+	</insert>
+
 	<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT 
@@ -45,7 +68,7 @@
 				NUM = #{NUM}
 		]]>
 	</select>
-	
+
 	<update id="updateHitCnt" parameterType="hashmap">
 		<![CDATA[
 			UPDATE 
@@ -56,7 +79,7 @@
 				NUM = #{NUM}
 		]]>
 	</update>
-	
+
 	<update id="updateBoard" parameterType="hashmap">
 		<![CDATA[
 			UPDATE 
@@ -64,12 +87,34 @@
 			SET 
 				SUBJECT = #{SUBJECT},
 				CONTENT = #{CONTENT},
-				REG_DATE = #{REG_DATE} 
+				REG_DATE = NOW()
 			WHERE 
 				NUM = #{NUM}
 		]]>
 	</update>
-	
+
+	<update id="deleteFileList" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				TB_FILE 
+			SET
+				DEL_GB = 'Y'
+			WHERE 
+				BOARD_NUM = #{NUM}
+		]]>
+	</update>
+
+	<update id="updateFile" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				TB_FILE 
+			SET
+				DEL_GB = 'N'
+			WHERE 
+				NUM = #{FILE_NUM}
+		]]>
+	</update>
+
 	<delete id="deleteBoard" parameterType="hashmap">
 		<![CDATA[
 			DELETE FROM
@@ -78,5 +123,5 @@
 				NUM = #{NUM}
 		]]>
 	</delete>
-	
+
 </mapper>
